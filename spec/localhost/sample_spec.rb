@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-#ec2-userのグループが存在するか確認する
-describe group('ec2-user') do
-  it { should exist }
-end
-
-
 #ポート22をListenしているか確認する
 describe port("22") do
   it { should be_listening }
@@ -27,14 +21,7 @@ describe package('nodejs') do
 end
 
 #rubyをインストールするために必要なパッケージがインストールされているか確認する
-%w{gcc gcc-c++ openssl-devel libyaml-devel readline-devel zlib-devel sqlite-devel libselinux-python }.each do |pkg|
-  describe package(pkg) do
-    it { should be_installed }
-  end
-end
-
-#mysqlのパッケージがインストールされているか確認する
-%w{yum-utils MySQL-python mysql-community-server mysql-community-devel }.each do |pkg|
+%w{gcc gcc-c++ openssl-devel libyaml-devel readline-devel zlib-devel sqlite-devel  }.each do |pkg|
   describe package(pkg) do
     it { should be_installed }
   end
@@ -58,7 +45,7 @@ end
 #unicorn -vのコマンドでunicorn v6.1.0のバージョンがマッチングしているか確認
 describe command('unicorn -v') do
   let(:disable_sudo) { true }
-  its(:stdout) { should match /unicorn v6\.1\.0/ }
+  its(:stdout) { should match /unicorn v6\.0\.0/ }
 end
 
 #nginx.confのフォルダがあるか確認
